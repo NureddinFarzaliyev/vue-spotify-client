@@ -11,18 +11,10 @@ const handleLogin = async () => {
   await login()
   loading.value = false
 }
-
-const handleLogout = () => {
-  localStorage.removeItem('access_token')
-  localStorage.removeItem('refresh_token')
-  localStorage.removeItem('code_verifier')
-  auth.setIsLoggedIn(false)
-}
 </script>
 
 <template>
   <button v-if="!auth.isLoggedIn" :disabled="loading" @click="handleLogin">
     {{ loading ? 'Loading...' : 'Login' }}
   </button>
-  <button v-else @click="handleLogout">Log out</button>
 </template>
