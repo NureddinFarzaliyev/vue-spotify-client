@@ -1,4 +1,4 @@
-// import { getRefreshToken } from '@/shared/utils/auth/getRefreshToken'
+import { getRefreshToken } from '@/shared/utils/auth/getRefreshToken'
 import axios from 'axios'
 
 export const spotifyApi = axios.create({
@@ -11,17 +11,17 @@ spotifyApi.interceptors.request.use(async (config) => {
   return config
 })
 
-// spotifyApi.interceptors.response.use(
-//   (res) => res,
-//   async (err) => {
-//     if (
-//       err.response?.status === 401 &&
-//       err.response?.data?.error?.message === 'Invalid access token'
-//     ) {
-//       const newToken = await getRefreshToken()
-//       err.config.headers.Authorization = `Bearer ${newToken}`
-//       return spotifyApi(err.config)
-//     }
-//     return Promise.reject(err)
-//   },
-// )
+spotifyApi.interceptors.response.use(
+  (res) => res,
+  async (err) => {
+    if (
+      err.response?.status === 401 &&
+      err.response?.data?.error?.message === 'The access token expired'
+    ) {
+      const newToken = await getRefreshToken()
+      err.config.headers.Authorization = `Bearer ${newToken}`
+      return spotifyApi(err.config)
+    }
+    return Promise.reject(err)
+  },
+)
