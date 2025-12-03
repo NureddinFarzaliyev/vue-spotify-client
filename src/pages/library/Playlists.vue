@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useInfiniteScroll } from '@/composables/useInfiniteScroll'
+import { RouterLink } from 'vue-router'
 
 const PAGE_LIMIT = 30
 
@@ -14,18 +15,15 @@ const { data, initialLoading, pageLoading, total, fetchNextPage, nextExists } = 
 
     <div style="display: flex; flex-wrap: wrap">
       <div v-if="initialLoading">Loading...</div>
-      <div
-        v-for="(pl, key) in data"
-        v-else
-        style="border: solid 2px #000000aa; padding: 10px; margin: 10px; width: fit-content"
-        :key
-      >
-        <p>
-          <b>{{ pl.name }}</b>
-        </p>
+      <RouterLink v-for="(pl, key) in data" v-else :key :to="`/playlist/${pl.id}`">
+        <div style="border: solid 2px #000000aa; padding: 10px; margin: 10px; width: fit-content">
+          <p>
+            <b>{{ pl.name }}</b>
+          </p>
 
-        <img :src="pl.images[1] ? pl.images[1].url : pl.images[0].url" />
-      </div>
+          <img :src="pl.images[1] ? pl.images[1].url : pl.images[0].url" />
+        </div>
+      </RouterLink>
     </div>
 
     <div v-if="pageLoading">Loading more...</div>
