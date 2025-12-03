@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import Library from '@/pages/library/Library.vue'
 import { useAuthStore } from '@/stores/auth'
 import Login from '@/widgets/Login/Login.vue'
 import MyProfile from '@/widgets/MyProfile/MyProfile.vue'
-import Player from '@/widgets/Player/Player.vue'
+// import Player from '@/widgets/Player/Player.vue'
 
 const auth = useAuthStore()
 </script>
@@ -13,7 +14,8 @@ const auth = useAuthStore()
     <Login />
     <div v-if="auth.isLoggedIn">
       <MyProfile />
-      <Player />
+      <!-- <Player /> -->
+      <Library />
     </div>
   </div>
 </template>

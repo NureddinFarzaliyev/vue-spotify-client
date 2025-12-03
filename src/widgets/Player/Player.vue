@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { spotifyApi } from '@/api/spotify'
+import { displayArtists } from '@/shared/utils/displayArtists'
 import { onMounted, ref } from 'vue'
 
 const loading = ref(true)
@@ -29,7 +30,7 @@ onMounted(async () => {
     <p>Progress: {{ player?.progress_ms }} / {{ player?.item?.duration_ms }}</p>
     <p>{{ player?.item?.name }}</p>
     <p>
-      <span v-for="(artist, key) in player?.item?.artists" :key>{{ artist?.name }}</span>
+      {{ displayArtists(player?.item?.artists || []) }}
     </p>
     <img :src="player?.item?.album?.images[0]?.url" :alt="player?.item?.album?.name" />
   </div>

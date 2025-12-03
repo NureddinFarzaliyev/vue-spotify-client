@@ -4,7 +4,8 @@ export const login = async () => {
   const clientId = import.meta.env.VITE_CLIENT_ID
   const redirectUri = import.meta.env.VITE_REDIRECT_URI
 
-  const scope = 'user-read-private user-read-email user-read-playback-state'
+  const scope =
+    'user-read-private user-read-email user-read-playback-state user-library-read playlist-read-private user-follow-read'
   const authUrl = new URL('https://accounts.spotify.com/authorize')
 
   const { codeVerifier, codeChallenge } = await generatePKCECodes()
