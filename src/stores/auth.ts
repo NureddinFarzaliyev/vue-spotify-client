@@ -4,7 +4,8 @@ import { ref } from 'vue'
 export const useAuthStore = defineStore('auth', () => {
   const token = localStorage.getItem('access_token')
 
-  const isLoggedIn = ref(token ? true : false)
+  const isToken = token && token !== 'undefined'
+  const isLoggedIn = ref(isToken ? true : false)
 
   const setIsLoggedIn = (val: boolean) => {
     isLoggedIn.value = val
