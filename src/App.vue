@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { useAuthStore } from '@/stores/auth'
 import RightPanel from '@/widgets/RightPanel/RightPanel.vue'
 import { Splitter, SplitterPanel } from 'primevue'
 import { RouterView } from 'vue-router'
+
+const auth = useAuthStore()
 </script>
 
 <template>
@@ -9,7 +12,7 @@ import { RouterView } from 'vue-router'
     <SplitterPanel :minSize="50" class="h-dvh overflow-scroll">
       <RouterView />
     </SplitterPanel>
-    <SplitterPanel :size="5" :minSize="20" class="h-dvh overflow-scroll">
+    <SplitterPanel v-if="auth.isLoggedIn" :size="5" :minSize="20" class="h-dvh overflow-scroll">
       <RightPanel />
     </SplitterPanel>
   </Splitter>
