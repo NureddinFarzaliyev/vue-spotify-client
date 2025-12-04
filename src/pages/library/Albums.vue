@@ -1,24 +1,22 @@
 <script setup lang="ts">
 import { useInfiniteScroll } from '@/composables/useInfiniteScroll'
 import AlbumCard from '@/shared/ui/AlbumCard.vue'
+import FullPageLoading from '@/shared/ui/FullPageLoading.vue'
+import LoadMoreButton from '@/shared/ui/LoadMoreButton.vue'
 
 const PAGE_LIMIT = 30
 
-const { data, initialLoading, pageLoading, total, fetchNextPage, nextExists } = useInfiniteScroll(
+const { data, initialLoading, pageLoading, fetchNextPage, nextExists } = useInfiniteScroll(
   `/me/albums?offset=0&limit=${PAGE_LIMIT}`,
 )
 </script>
 
 <template>
   <div>
-    lib albums ({{ total }})
-
-    <div style="display: flex; flex-wrap: wrap">
-      <div v-if="initialLoading">Loading...</div>
+    <div class="flex flex-wrap gap-4 justify-center">
+      <FullPageLoading v-if="initialLoading" />
       <AlbumCard v-else v-for="({ album }, key) in data" :key :album />
     </div>
-
-    <div v-if="pageLoading">Loading more...</div>
-    <button @click="fetchNextPage()" :disabled="pageLoading || !nextExists">Load more</button>
+    <LoadMoreButton :initialLoading :pageLoading :nextExists :fetchNextPage />
   </div>
 </template>

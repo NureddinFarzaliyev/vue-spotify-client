@@ -2,12 +2,12 @@ import { spotifyApi } from '@/api/spotify'
 import { onMounted, ref } from 'vue'
 
 export const useInfiniteScroll = (initialUrl: string, useArtists: boolean = false) => {
-  const initialLoading = ref(true)
-  const pageLoading = ref(false)
+  const initialLoading = ref<boolean>(true)
+  const pageLoading = ref<boolean>(false)
   const data = ref<any>([])
-  const total = ref(0)
-  const fetchUrl = ref(initialUrl)
-  const nextExists = ref(true)
+  const total = ref<number>(0)
+  const fetchUrl = ref<string>(initialUrl)
+  const nextExists = ref<boolean>(true)
 
   onMounted(async () => {
     const res = await spotifyApi.get(fetchUrl.value)

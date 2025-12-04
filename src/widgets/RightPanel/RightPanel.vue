@@ -7,7 +7,7 @@ const auth = useAuthStore()
 </script>
 
 <template>
-  <div v-if="auth.isLoggedIn" class="p-10 flex flex-col gap-10">
+  <div v-if="auth.isLoggedIn" class="p-5 flex flex-col gap-10">
     <Player />
     <MyProfile />
   </div>
