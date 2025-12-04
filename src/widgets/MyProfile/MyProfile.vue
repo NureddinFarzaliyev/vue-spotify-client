@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { spotifyApi } from '@/api/spotify'
 import { useAuthStore } from '@/stores/auth'
+import { Button } from 'primevue'
 import { onMounted, ref } from 'vue'
 
 const me = ref()
@@ -15,15 +16,31 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
-    <h3>My Profile</h3>
+  <div class="p-5 border rounded-md block overflow-hidden">
     <div v-if="loading">Loading...</div>
-    <div v-else>
-      <img :src="me.images[0].url" :alt="`${me.display_name}'s profile picture`" />
-      <p>{{ me.display_name }}</p>
-      <p>{{ me.followers.total }} Followers</p>
-      <a :href="me.external_urls.spotify" target="_blank">spotify</a>
-      <button @click="auth.logout()">Log out</button>
+    <div v-else class="flex gap-4">
+      <img
+        class="h-20 w-20 rounded-full shadow-md shadow-black/40"
+        :src="me.images[0].url"
+        :alt="`${me.display_name}'s profile picture`"
+      />
+      <div>
+        <a :href="me ? me.external_urls.spotify : '#'" target="_blank">
+          <p class="font-semibold text-lg hover:underline hover:text-spotify">
+            {{ me.display_name }}
+          </p>
+        </a>
+        <p class="text-sm opacity-70">{{ me.followers.total }} Followers</p>
+
+        <Button
+          size="small"
+          class="text-xs mt-2"
+          variant="outlined"
+          severity="danger"
+          @click="auth.logout()"
+          >Log out</Button
+        >
+      </div>
     </div>
   </div>
 </template>
