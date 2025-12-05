@@ -19,15 +19,16 @@ onMounted(async () => {
     auth.setIsLoggedIn(true)
     router.push('/')
   } else {
-    error.value = 'Some error happened. Please try again.'
+    error.value = 'Unexpected error happened. Please try again.'
   }
 })
 </script>
 
 <template>
   <div>
-    <h3>Callback</h3>
-    {{ loading ? 'Loading...' : '' }}
-    {{ error ? error : '' }}
+    <p class="text-center text-lg mt-20">
+      {{ loading ? 'Loading...' : '' }}
+      {{ error ? error : '' }}
+    </p>
   </div>
 </template>
