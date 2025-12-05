@@ -14,7 +14,7 @@ defineProps<PlaylistCardProps>()
 
 <template>
   <BasicLinkCard
-    :to="`/album/${pl.id}`"
+    :to="`/playlist/${pl.id}`"
     :src="pl.images[1] ? pl.images[1].url : pl.images[0]?.url"
     :primaryText="pl.name"
   />
