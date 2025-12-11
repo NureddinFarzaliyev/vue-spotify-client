@@ -1,21 +1,22 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth'
 import RightPanel from '@/widgets/RightPanel/RightPanel.vue'
-import { Splitter, SplitterPanel } from 'primevue'
 import { RouterView } from 'vue-router'
 
 const auth = useAuthStore()
 </script>
 
 <template>
-  <Splitter class="h-dvh overflow-hidden">
-    <SplitterPanel :minSize="50" class="h-dvh overflow-scroll">
+  <div
+    class="h-dvh overflow-hidden grid grid-cols-1 lg:grid-cols-[2fr_1fr] xl:grid-cols-[3fr_1fr] bg-[#18181B]"
+  >
+    <div class="h-dvh overflow-scroll">
       <RouterView />
-    </SplitterPanel>
-    <SplitterPanel v-if="auth.isLoggedIn" :size="5" :minSize="20" class="h-dvh overflow-scroll">
+    </div>
+    <div v-if="auth.isLoggedIn" class="h-dvh overflow-scroll border-l border-white/10">
       <RightPanel />
-    </SplitterPanel>
-  </Splitter>
+    </div>
+  </div>
 </template>
 
 <style>

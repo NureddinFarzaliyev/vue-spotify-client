@@ -16,7 +16,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="p-5 border rounded-md block overflow-hidden">
+  <div class="p-5 border rounded-md block overflow-hidden max-lg:hidden">
     <div v-if="loading" class="w-full">Loading...</div>
     <div v-else class="flex gap-4">
       <img
