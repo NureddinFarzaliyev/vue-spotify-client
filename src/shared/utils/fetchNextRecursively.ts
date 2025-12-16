@@ -1,7 +1,7 @@
 import { spotifyApi } from '@/api/spotify'
 import { prepareNextUrl } from '@/shared/utils/prepareNextUrl'
 
-export const fetchAllPlaylistTracks = async (initUrl: string): Promise<unknown[] | undefined> => {
+export const fetchNextRecursively = async <T>(initUrl: string): Promise<T[] | undefined> => {
   try {
     let url = initUrl
     const tracks = []

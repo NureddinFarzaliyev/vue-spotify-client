@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { spotifyApi } from '@/api/spotify'
 import FullPageLoading from '@/shared/ui/FullPageLoading.vue'
-import { fetchAllPlaylistTracks } from '@/shared/utils/fetchAllPlaylistTracks'
+import { fetchNextRecursively } from '@/shared/utils/fetchNextRecursively'
 import { shuffleHundred } from '@/shared/utils/shuffle'
 import { useAuthStore } from '@/stores/auth'
 import classNames from 'classnames'
@@ -15,9 +15,12 @@ enum StatusTypes {
   SUC = 'success',
 }
 
+type TempPlaylist = { name: string; id: string }
+type TempTrack = { track: { uri: string } }
+
 const PLAYLIST_NAME = 'Vue True Shuffle Playlist'
 
-const allPlaylists = ref<unknown[]>([])
+const allPlaylists = ref<TempPlaylist[]>([])
 const initialLoading = ref(true)
 
 const chosenPlaylist = ref()
@@ -34,7 +37,7 @@ const updateStatus = (text: string, type: StatusTypes = StatusTypes.INFO) => {
 }
 
 onMounted(async () => {
-  const allPlst = await fetchAllPlaylistTracks(`/me/playlists?offset=0&limit=50`)
+  const allPlst = await fetchNextRecursively<TempPlaylist>(`/me/playlists?offset=0&limit=50`)
   initialLoading.value = false
   if (!allPlst || !allPlst.length) {
     return
@@ -48,7 +51,9 @@ const onShuffle = async () => {
     isShuffling.value = true
 
     updateStatus('Fetching playlist tracks...')
-    const tracks = await fetchAllPlaylistTracks(`/playlists/${chosenPlaylist.value.id}/tracks`)
+    const tracks = await fetchNextRecursively<TempTrack>(
+      `/playlists/${chosenPlaylist.value.id}/tracks`,
+    )
 
     if (tracks?.length === 0) {
       throw new Error('There are no tracks in this playlist.')
@@ -72,9 +77,7 @@ const onShuffle = async () => {
     }
 
     updateStatus('Preparing the playlist...')
-    const existingPlaylist = (allPlaylists.value as { name: string; id: string }[]).find(
-      (pl) => pl.name === PLAYLIST_NAME,
-    )
+    const existingPlaylist = allPlaylists.value.find((pl) => pl.name === PLAYLIST_NAME)
 
     if (existingPlaylist) {
       playlistId.value = existingPlaylist.id
@@ -90,7 +93,7 @@ const onShuffle = async () => {
     }
 
     updateStatus('Adding shuffled tracks to playlist...')
-    const uris = (shuffledTracks as { track: { uri: string } }[]).map((tr) => tr.track.uri)
+    const uris = shuffledTracks.map((tr) => tr.track.uri)
 
     const result = await spotifyApi.put(`/playlists/${playlistId.value}/tracks`, {
       uris,
