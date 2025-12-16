@@ -102,7 +102,7 @@ const onShuffle = async () => {
 
     if (result.status === 200) {
       updateStatus(
-        `Success!\nYou\'ll find shuffled tracks on a playlist called "${PLAYLIST_NAME}" on your library.`,
+        `Success!\nYou can find shuffled tracks on a playlist called "${PLAYLIST_NAME}" on your library.`,
         StatusTypes.SUC,
       )
     }
@@ -127,9 +127,8 @@ const onShuffle = async () => {
         <ShuffleIcon :size="24" /> Shuffle
       </h1>
       <p class="opacity-70 mt-2">
-        Shuffle function create a temporary playlist that consist of truly shuffled songs from any
-        playlist you choose. If you cannot find your playlist on the list, click the "Load More"
-        button on the right.
+        Shuffle function create a temporary playlist named <b>"{{ PLAYLIST_NAME }}"</b> that consist
+        of truly shuffled songs from any playlist you choose.
       </p>
     </div>
     <div class="flex gap-3">
