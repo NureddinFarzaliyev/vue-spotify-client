@@ -1,4 +1,5 @@
 import { spotifyApi } from '@/api/spotify'
+import { prepareNextUrl } from '@/shared/utils/prepareNextUrl'
 import { onMounted, ref } from 'vue'
 
 export const useInfiniteScroll = (initialUrl: string, useArtists: boolean = false) => {
@@ -18,7 +19,7 @@ export const useInfiniteScroll = (initialUrl: string, useArtists: boolean = fals
     data.value = incomingData.items
     total.value = incomingData.total
     if (incomingData.next) {
-      fetchUrl.value = incomingData.next?.replace('https://api.spotify.com/v1', '')
+      fetchUrl.value = prepareNextUrl(incomingData.next)
     } else {
       fetchUrl.value = ''
       nextExists.value = false
@@ -34,7 +35,7 @@ export const useInfiniteScroll = (initialUrl: string, useArtists: boolean = fals
 
     data.value = [...data.value, ...incomingData.items]
     if (incomingData.next) {
-      fetchUrl.value = incomingData.next?.replace('https://api.spotify.com/v1', '')
+      fetchUrl.value = prepareNextUrl(incomingData.next)
     } else {
       fetchUrl.value = ''
       nextExists.value = false

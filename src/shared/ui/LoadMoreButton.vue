@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import classNames from 'classnames'
 import { Button } from 'primevue'
 
 interface LoadMoreBtnProps {
@@ -6,17 +7,20 @@ interface LoadMoreBtnProps {
   pageLoading: boolean
   nextExists: boolean
   fetchNextPage: () => void
+  noMargin?: boolean
+  variant?: string
 }
 defineProps<LoadMoreBtnProps>()
 </script>
 
 <template>
-  <div class="flex justify-center my-8">
+  <div :class="classNames('flex justify-center', !noMargin && 'my-8')">
     <Button
       v-if="!initialLoading"
       @click="fetchNextPage()"
       :disabled="pageLoading || !nextExists"
       :loading="pageLoading"
+      :variant
     >
       {{ pageLoading ? 'Loading...' : 'Load More' }}
     </Button>

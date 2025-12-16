@@ -4,11 +4,12 @@ import TabList from 'primevue/tablist'
 import Tab from 'primevue/tab'
 import TabPanels from 'primevue/tabpanels'
 import TabPanel from 'primevue/tabpanel'
-import { Disc, PlayCircle, SearchIcon, User } from 'lucide-vue-next'
+import { Disc, PlayCircle, SearchIcon, ShuffleIcon, User } from 'lucide-vue-next'
 import Albums from '@/pages/library/Albums.vue'
 import Playlists from '@/pages/library/Playlists.vue'
 import Artists from '@/pages/library/Artists.vue'
 import Search from '@/pages/search/Search.vue'
+import Shuffle from '@/pages/shuffle/Shuffle.vue'
 </script>
 
 <template>
@@ -18,6 +19,7 @@ import Search from '@/pages/search/Search.vue'
       <Tab value="1" class="flex items-center gap-1.5"> <PlayCircle :size="20" /> Playlists</Tab>
       <Tab value="2" class="flex items-center gap-1.5"> <User :size="20" /> Artists</Tab>
       <Tab value="3" class="flex items-center gap-1.5"> <SearchIcon :size="20" /> Search</Tab>
+      <Tab value="4" class="flex items-center gap-1.5"> <ShuffleIcon :size="20" /> Shuffle</Tab>
     </TabList>
     <TabPanels>
       <TabPanel value="0">
@@ -31,6 +33,9 @@ import Search from '@/pages/search/Search.vue'
       </TabPanel>
       <TabPanel value="3">
         <Search />
+      </TabPanel>
+      <TabPanel value="4">
+        <Shuffle />
       </TabPanel>
     </TabPanels>
   </Tabs>
