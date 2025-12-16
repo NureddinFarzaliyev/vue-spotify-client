@@ -10,10 +10,25 @@ import Playlists from '@/pages/library/Playlists.vue'
 import Artists from '@/pages/library/Artists.vue'
 import Search from '@/pages/search/Search.vue'
 import Shuffle from '@/pages/shuffle/Shuffle.vue'
+import { ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+
+const route = useRoute()
+const router = useRouter()
+
+const tab = ref<string>((route.query.tab as string) ?? '0')
+
+watch(
+  tab,
+  (newTab) => {
+    router.replace({ query: { ...route.query, tab: newTab } })
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
-  <Tabs value="0">
+  <Tabs v-model:value="tab">
     <TabList class="w-full sticky top-0 z-99">
       <Tab value="0" class="flex items-center gap-1.5"> <Disc :size="20" /> Albums</Tab>
       <Tab value="1" class="flex items-center gap-1.5"> <PlayCircle :size="20" /> Playlists</Tab>
