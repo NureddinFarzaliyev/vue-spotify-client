@@ -51,7 +51,9 @@ const tick = (now: number) => {
       progress.value += delta
     }
   } else {
-    fetchPlayerState()
+    if (player.value) {
+      fetchPlayerState()
+    }
   }
 
   frameId = requestAnimationFrame(tick)
